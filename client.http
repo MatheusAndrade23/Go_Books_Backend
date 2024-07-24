@@ -24,12 +24,20 @@ Content-Type: application/json
 
 ###
 
-# @name create_book
-POST {{baseUrl}}/books
+# @name create_auction
+POST {{baseUrl}}/auctions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 { 
-  "title": "New Book",
-  "content": "Teste"
+  "bookName": "New Book 3",
+  "description": "LOREM IPSUM"
 }
+
+
+###
+
+# @name fetch_recent_questions
+GET {{baseUrl}}/auctions?page=2
+Content-Type: application/json
+Authorization: Bearer {{authToken}}

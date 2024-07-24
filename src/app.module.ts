@@ -1,11 +1,13 @@
 import { AuthModule } from "./auth/auth.module";
 import { Module } from "@nestjs/common";
 import { PrismaService } from "./prisma/prisma.service";
-import { CreateAccountController } from "./controllers/create-account.controller";
-import { AuthenticateController } from "./controllers/authenticate.controller";
-import { CreateBookController } from "./controllers/create-book.controller";
 import { ConfigModule } from "@nestjs/config";
-import { envSchema } from "src/env";
+import { envSchema } from "@/env";
+
+import { CreateAuctionController } from "./controllers/create-auction.controller";
+import { AuthenticateController } from "./controllers/authenticate.controller";
+import { CreateAccountController } from "./controllers/create-account.controller";
+import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctions.controller";
 
 @Module({
   imports: [
@@ -18,7 +20,8 @@ import { envSchema } from "src/env";
   controllers: [
     CreateAccountController,
     AuthenticateController,
-    CreateBookController,
+    CreateAuctionController,
+    FetchRecentAuctionsController,
   ],
   providers: [PrismaService],
 })
