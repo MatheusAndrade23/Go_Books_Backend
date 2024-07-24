@@ -2,6 +2,7 @@ import { Auction } from "@/domain/auctions/enterprise/entities/auction";
 import { AuctionsRepository } from "../repositories/auctions-repository";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Either, right } from "@/core/either";
+import { Injectable } from "@nestjs/common";
 
 interface CreateAuctionUseCaseRequest {
   authorId: string;
@@ -17,6 +18,7 @@ type CreateAuctionUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class CreateAuctionUseCase {
   constructor(private auctionsRepository: AuctionsRepository) {}
 

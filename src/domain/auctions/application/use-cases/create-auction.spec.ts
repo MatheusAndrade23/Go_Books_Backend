@@ -15,6 +15,7 @@ describe("Create Auction", () => {
       authorId: "1",
       bookName: "Nova Livro",
       description: "Descrição da Livro",
+      bookImageUrl: "http://image.com",
     });
 
     expect(result.isRight()).toBe(true);

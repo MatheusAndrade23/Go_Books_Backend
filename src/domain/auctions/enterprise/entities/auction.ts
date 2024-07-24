@@ -78,7 +78,7 @@ export class Auction extends AggregateRoot<AuctionProps> {
   }
 
   set bookImageUrl(bookImageUrl: string) {
-    this.props.description = bookImageUrl;
+    this.props.bookImageUrl = bookImageUrl;
   }
 
   static create(

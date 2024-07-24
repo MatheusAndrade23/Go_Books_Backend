@@ -3,7 +3,7 @@ import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
-import { PrismaService } from "@/infra/database/prisma/prisma.service";
+import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 import { z } from "zod";
 
 const createAuctionBodySchema = z.object({
@@ -19,7 +19,7 @@ type CreateAuctionBodySchema = z.infer<typeof createAuctionBodySchema>;
 @Controller("/auctions")
 @UseGuards(JwtAuthGuard)
 export class CreateAuctionController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private createAuction: CreateAuctionUseCase) {}
 
   @Post()
   async handle(
@@ -29,25 +29,11 @@ export class CreateAuctionController {
     const { bookName, description, bookImageUrl } = body;
     const userId = user.sub;
 
-    const slug = this.convertToSlug(bookName);
-
-    await this.prisma.auction.create({
-      data: {
-        authorId: userId,
-        bookName,
-        bookImageUrl,
-        description,
-        slug,
-      },
+    await this.createAuction.execute({
+      authorId: userId,
+      bookName,
+      bookImageUrl,
+      description,
     });
-  }
-
-  private convertToSlug(bookName: string): string {
-    return bookName
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-");
   }
 }

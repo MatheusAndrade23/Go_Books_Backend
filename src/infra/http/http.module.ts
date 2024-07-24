@@ -5,6 +5,7 @@ import { CreateAccountController } from "./controllers/create-account.controller
 import { CreateAuctionController } from "./controllers/create-auction.controller";
 import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctions.controller";
 import { DatabaseModule } from "../database/database.module";
+import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 
 @Module({
   imports: [DatabaseModule],
@@ -14,5 +15,6 @@ import { DatabaseModule } from "../database/database.module";
     CreateAuctionController,
     FetchRecentAuctionsController,
   ],
+  providers: [CreateAuctionUseCase],
 })
 export class HttpModule {}
