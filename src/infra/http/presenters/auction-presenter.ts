@@ -6,7 +6,7 @@ export class AuctionPresenter {
       id: auction.id.toString(),
       bookName: auction.bookName,
       slug: auction.slug.value,
-      acceptedBid: auction.acceptedBidId?.toString(),
+      acceptedBidId: auction.acceptedBidId?.toString(),
       createdAt: auction.createdAt,
       bookImageUrl: auction.bookImageUrl,
     };
