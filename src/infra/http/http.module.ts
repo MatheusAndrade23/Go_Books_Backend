@@ -10,6 +10,7 @@ import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-ca
 import { RegisterBuyerUseCase } from "@/domain/auctions/application/use-cases/register-buyer";
 import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-cases/authenticate-buyer";
 import { CryptographyModule } from "../cryptography/cryptography.module";
+import { UploadAttachmentController } from "./controllers/upload-attachment.controller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -18,6 +19,7 @@ import { CryptographyModule } from "../cryptography/cryptography.module";
     AuthenticateController,
     CreateAuctionController,
     FetchRecentAuctionsController,
+    UploadAttachmentController,
   ],
   providers: [
     CreateAuctionUseCase,
