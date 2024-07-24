@@ -1,4 +1,10 @@
-import { Controller, Get, Query, UseGuards } from "@nestjs/common";
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
@@ -24,14 +30,12 @@ export class FetchRecentAuctionsController {
 
   @Get()
   async handle(@Query("page", queryValidationPipe) page: PageQueryParamSchema) {
-    const perPage = 20;
-
     const result = await this.fetchRecentAuctions.execute({
       page,
     });
 
     if (result.isLeft()) {
-      throw new Error();
+      throw new BadRequestException();
     }
 
     const auctions = result.value.auctions;

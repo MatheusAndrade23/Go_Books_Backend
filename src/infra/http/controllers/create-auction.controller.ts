@@ -1,4 +1,10 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
@@ -29,11 +35,15 @@ export class CreateAuctionController {
     const { bookName, description, bookImageUrl } = body;
     const userId = user.sub;
 
-    await this.createAuction.execute({
+    const result = await this.createAuction.execute({
       authorId: userId,
       bookName,
       bookImageUrl,
       description,
     });
+
+    if (result.isLeft()) {
+      throw new BadRequestException();
+    }
   }
 }
