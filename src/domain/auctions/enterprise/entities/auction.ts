@@ -10,7 +10,7 @@ export interface AuctionProps {
   bookName: string;
   description: string;
   slug: Slug;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export class Auction extends AggregateRoot<AuctionProps> {
