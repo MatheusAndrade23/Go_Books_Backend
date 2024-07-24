@@ -8,22 +8,38 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String    @id @default(uuid())
   name     String
-  email    String @unique
+  email    String    @unique
   password String
-  books    Book[]
+  books    Auction[]
+  bids     Bid[]
 
   @@map("users")
 }
 
-model Book {
-  id       String @id @default(uuid())
-  title    String
-  slug     String @unique
-  content  String
-  authorId String @map("author_id")
-  author   User   @relation(fields: [authorId], references: [id])
+model Auction {
+  id          String   @id @default(uuid())
+  bookName    String   @map("book_name")
+  slug        String   @unique
+  description String
+  authorId    String   @map("author_id")
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+  Bid         Bid[]
 
-  @@map("questions")
+  @@map("books")
+}
+
+model Bid {
+  id        String   @id @default(uuid())
+  amount    Int
+  bidderId  String   @map("bidder_id")
+  bidder    User     @relation(fields: [bidderId], references: [id])
+  auctionId String   @map("book_id")
+  auction   Auction  @relation(fields: [auctionId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  status    String   @default("pending")
+
+  @@map("bids")
 }
