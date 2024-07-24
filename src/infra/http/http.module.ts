@@ -7,15 +7,23 @@ import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctio
 import { DatabaseModule } from "../database/database.module";
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
+import { RegisterBuyerUseCase } from "@/domain/auctions/application/use-cases/register-buyer";
+import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-cases/authenticate-buyer";
+import { CryptographyModule } from "../cryptography/cryptography.module";
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, CryptographyModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
     CreateAuctionController,
     FetchRecentAuctionsController,
   ],
-  providers: [CreateAuctionUseCase, FetchRecentAuctionsUseCase],
+  providers: [
+    CreateAuctionUseCase,
+    FetchRecentAuctionsUseCase,
+    RegisterBuyerUseCase,
+    AuthenticateBuyerUseCase,
+  ],
 })
 export class HttpModule {}

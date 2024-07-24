@@ -30,7 +30,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 { 
-  "bookName": "New Book 01",
+  "bookName": "New Book 07",
   "description": "LOREM IPSUM",
   "bookImageUrl": "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg"
 }
