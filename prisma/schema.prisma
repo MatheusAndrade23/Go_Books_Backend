@@ -7,11 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  BUYER
+  SELLER
+}
+
+enum AuctionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
 model User {
   id       String    @id @default(uuid())
   name     String
   email    String    @unique
   password String
+  role     UserRole  @default(BUYER)
   books    Auction[]
   bids     Bid[]
 
@@ -19,27 +31,33 @@ model User {
 }
 
 model Auction {
-  id          String   @id @default(uuid())
-  bookName    String   @map("book_name")
-  slug        String   @unique
-  description String
-  authorId    String   @map("author_id")
-  author      User     @relation(fields: [authorId], references: [id])
-  createdAt   DateTime @default(now()) @map("created_at")
-  Bid         Bid[]
+  id            String   @id @default(uuid())
+  bookName      String   @map("book_name")
+  bookImageUrl  String   @map("book_image_url")
+  slug          String   @unique
+  description   String
+  authorId      String   @map("author_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  acceptedBidId String?  @unique @map("accepted_bid_id")
 
-  @@map("books")
+  author      User  @relation(fields: [authorId], references: [id])
+  acceptedBid Bid?  @relation("acceptedBid", fields: [acceptedBidId], references: [id])
+  bids        Bid[]
+
+  @@map("auctions")
 }
 
 model Bid {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   amount    Int
-  bidderId  String   @map("bidder_id")
-  bidder    User     @relation(fields: [bidderId], references: [id])
-  auctionId String   @map("book_id")
-  auction   Auction  @relation(fields: [auctionId], references: [id])
-  createdAt DateTime @default(now()) @map("created_at")
-  status    String   @default("pending")
+  bidderId  String        @map("bidder_id")
+  auctionId String        @map("book_id")
+  createdAt DateTime      @default(now()) @map("created_at")
+  status    AuctionStatus @default(PENDING)
+
+  acceptedOn Auction? @relation("acceptedBid")
+  auction    Auction  @relation(fields: [auctionId], references: [id])
+  bidder     User     @relation(fields: [bidderId], references: [id])
 
   @@map("bids")
 }

@@ -8,10 +8,14 @@ export class PrismaAuctionMapper {
     return Auction.create(
       {
         bookName: raw.bookName,
+        bookImageUrl: raw.bookImageUrl,
         description: raw.description,
         authorId: new UniqueEntityID(raw.authorId),
         slug: Slug.create(raw.slug),
         createdAt: raw.createdAt,
+        acceptedBidId: raw.acceptedBidId
+          ? new UniqueEntityID(raw.acceptedBidId)
+          : null,
       },
       new UniqueEntityID(raw.id)
     );
