@@ -6,6 +6,7 @@ import { CreateAuctionController } from "./controllers/create-auction.controller
 import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctions.controller";
 import { DatabaseModule } from "../database/database.module";
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
+import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
 
 @Module({
   imports: [DatabaseModule],
@@ -15,6 +16,6 @@ import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/cr
     CreateAuctionController,
     FetchRecentAuctionsController,
   ],
-  providers: [CreateAuctionUseCase],
+  providers: [CreateAuctionUseCase, FetchRecentAuctionsUseCase],
 })
 export class HttpModule {}

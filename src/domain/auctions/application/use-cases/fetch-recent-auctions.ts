@@ -1,6 +1,7 @@
 import { Auction } from "@/domain/auctions/enterprise/entities/auction";
 import { AuctionsRepository } from "../repositories/auctions-repository";
 import { Either, right } from "@/core/either";
+import { Injectable } from "@nestjs/common";
 
 interface FetchRecentAuctionsUseCaseRequest {
   page: number;
@@ -13,6 +14,7 @@ type FetchRecentAuctionsUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class FetchRecentAuctionsUseCase {
   constructor(private auctionsRepository: AuctionsRepository) {}
 

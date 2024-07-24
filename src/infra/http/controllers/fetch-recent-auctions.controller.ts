@@ -1,7 +1,7 @@
 import { Controller, Get, Query, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
-import { PrismaService } from "@/infra/database/prisma/prisma.service";
+import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
 import { z } from "zod";
 
 const pageQueryParamSchema = z
@@ -18,18 +18,14 @@ type PageQueryParamSchema = z.infer<typeof pageQueryParamSchema>;
 @Controller("/auctions")
 @UseGuards(JwtAuthGuard)
 export class FetchRecentAuctionsController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private fetchRecentAuctions: FetchRecentAuctionsUseCase) {}
 
   @Get()
   async handle(@Query("page", queryValidationPipe) page: PageQueryParamSchema) {
     const perPage = 20;
 
-    const auctions = await this.prisma.auction.findMany({
-      take: perPage,
-      skip: (page - 1) * perPage,
-      orderBy: {
-        createdAt: "desc",
-      },
+    const auctions = await this.fetchRecentAuctions.execute({
+      page,
     });
 
     return { auctions };
