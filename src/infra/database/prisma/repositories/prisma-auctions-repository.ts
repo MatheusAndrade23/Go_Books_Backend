@@ -1,7 +1,9 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { AuctionsRepository } from "@/domain/auctions/application/repositories/auctions-repository";
 import { Auction } from "@/domain/auctions/enterprise/entities/auction";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class PrismaAuctionsRepository implements AuctionsRepository {
   findById(id: string): Promise<Auction | null> {
     throw new Error("Method not implemented.");
