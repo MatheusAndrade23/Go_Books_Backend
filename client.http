@@ -30,7 +30,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 { 
-  "bookName": "New Book 3",
+  "bookName": "New Book 5",
   "description": "LOREM IPSUM"
 }
 
