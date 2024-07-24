@@ -6,8 +6,8 @@ POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "Diego Fernandes",
-  "email": "diego@rocketseat.com.br",
+  "name": "Matheus Andrade",
+  "email": "matheus@next.com",
   "password": "123456"
 }
 
@@ -18,7 +18,7 @@ POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "email": "diego@rocketseat.com.br",
+  "email": "matheus@next.com",
   "password": "123456"
 }
 
@@ -28,3 +28,8 @@ Content-Type: application/json
 POST {{baseUrl}}/books
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
+
+{ 
+  "title": "New Book",
+  "content": "Teste"
+}
