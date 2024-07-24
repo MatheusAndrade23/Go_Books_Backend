@@ -22,7 +22,7 @@ export class FetchRecentAuctionsController {
 
   @Get()
   async handle(@Query("page", queryValidationPipe) page: PageQueryParamSchema) {
-    const perPage = 1;
+    const perPage = 20;
 
     const auctions = await this.prisma.auction.findMany({
       take: perPage,
