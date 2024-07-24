@@ -22,19 +22,55 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
 
     return PrismaAuctionMapper.toDomain(auction);
   }
-  findBySlug(slug: string): Promise<Auction | null> {
-    throw new Error("Method not implemented.");
+  async findBySlug(slug: string): Promise<Auction | null> {
+    const auction = await this.prisma.auction.findUnique({
+      where: {
+        slug,
+      },
+    });
+
+    if (!auction) {
+      return null;
+    }
+
+    return PrismaAuctionMapper.toDomain(auction);
   }
-  create(auction: Auction): Promise<void> {
-    throw new Error("Method not implemented.");
+  async create(auction: Auction): Promise<void> {
+    const data = PrismaAuctionMapper.toPrisma(auction);
+
+    await this.prisma.auction.create({
+      data,
+    });
   }
-  delete(auction: Auction): Promise<void> {
-    throw new Error("Method not implemented.");
+  async delete(auction: Auction): Promise<void> {
+    const data = PrismaAuctionMapper.toPrisma(auction);
+
+    await this.prisma.auction.delete({
+      where: {
+        id: data.id,
+      },
+    });
   }
-  save(auction: Auction): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async save(auction: Auction): Promise<void> {
+    const data = PrismaAuctionMapper.toPrisma(auction);
+
+    await this.prisma.auction.update({
+      where: {
+        id: auction.id.toString(),
+      },
+      data,
+    });
   }
-  findManyRecent(params: PaginationParams): Promise<Auction[]> {
-    throw new Error("Method not implemented.");
+  async findManyRecent({ page }: PaginationParams): Promise<Auction[]> {
+    const auctions = await this.prisma.auction.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    });
+
+    return auctions.map(PrismaAuctionMapper.toDomain);
   }
 }
