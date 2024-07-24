@@ -1,11 +1,11 @@
-import { AppModule } from "@/app.module";
-import { PrismaService } from "@/prisma/prisma.service";
+import { AppModule } from "@/infra/app.module";
+import { PrismaService } from "@/infra/database/prisma/prisma.service";
 import { INestApplication } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 
-describe("Fetch recent auctions (E2E)", () => {
+describe("Create auction (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let jwt: JwtService;
@@ -23,7 +23,7 @@ describe("Fetch recent auctions (E2E)", () => {
     await app.init();
   });
 
-  test("[GET] /auctions", async () => {
+  test("[POST] /auctions", async () => {
     const user = await prisma.user.create({
       data: {
         name: "John Doe",
@@ -34,34 +34,22 @@ describe("Fetch recent auctions (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id });
 
-    await prisma.auction.createMany({
-      data: [
-        {
-          bookName: "Book 01",
-          slug: "Book-01",
-          description: "Book content",
-          authorId: user.id,
-        },
-        {
-          bookName: "Book 02",
-          slug: "Book-02",
-          description: "Book content",
-          authorId: user.id,
-        },
-      ],
-    });
-
     const response = await request(app.getHttpServer())
-      .get("/auctions")
+      .post("/auctions")
       .set("Authorization", `Bearer ${accessToken}`)
-      .send();
+      .send({
+        bookName: "New Book",
+        description: "LOREM IPSUM",
+      });
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual({
-      auctions: [
-        expect.objectContaining({ bookName: "Book 01" }),
-        expect.objectContaining({ bookName: "Book 02" }),
-      ],
+    expect(response.statusCode).toBe(201);
+
+    const auctionOnDatabase = await prisma.auction.findFirst({
+      where: {
+        bookName: "New Book",
+      },
     });
+
+    expect(auctionOnDatabase).toBeTruthy();
   });
 });
