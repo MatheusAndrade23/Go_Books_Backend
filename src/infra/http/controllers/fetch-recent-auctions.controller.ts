@@ -4,6 +4,8 @@ import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
 import { z } from "zod";
 
+import { AuctionPresenter } from "../presenters/auction-presenter";
+
 const pageQueryParamSchema = z
   .string()
   .optional()
@@ -24,10 +26,16 @@ export class FetchRecentAuctionsController {
   async handle(@Query("page", queryValidationPipe) page: PageQueryParamSchema) {
     const perPage = 20;
 
-    const auctions = await this.fetchRecentAuctions.execute({
+    const result = await this.fetchRecentAuctions.execute({
       page,
     });
 
-    return { auctions };
+    if (result.isLeft()) {
+      throw new Error();
+    }
+
+    const auctions = result.value.auctions;
+
+    return { auctions: auctions.map(AuctionPresenter.toHTTP) };
   }
 }
