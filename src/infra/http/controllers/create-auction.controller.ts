@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Post,
-  UseGuards,
-} from "@nestjs/common";
+import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
@@ -23,7 +17,6 @@ const bodyValidationPipe = new ZodValidationPipe(createAuctionBodySchema);
 type CreateAuctionBodySchema = z.infer<typeof createAuctionBodySchema>;
 
 @Controller("/auctions")
-@UseGuards(JwtAuthGuard)
 export class CreateAuctionController {
   constructor(private createAuction: CreateAuctionUseCase) {}
 

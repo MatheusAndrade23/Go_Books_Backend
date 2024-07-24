@@ -8,6 +8,7 @@ import {
   UsePipes,
 } from "@nestjs/common";
 import { z } from "zod";
+import { Public } from "@/infra/auth/public";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { RegisterBuyerUseCase } from "@/domain/auctions/application/use-cases/register-buyer";
 import { BuyerAlreadyExistsError } from "@/domain/auctions/application/use-cases/errors/buyer-already-exists-error";
@@ -21,6 +22,7 @@ const createAccountBodySchema = z.object({
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 
 @Controller("/accounts")
+@Public()
 export class CreateAccountController {
   constructor(private registerBuyer: RegisterBuyerUseCase) {}
 

@@ -1,5 +1,6 @@
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { z } from "zod";
+import { Public } from "@/infra/auth/public";
 
 import {
   BadRequestException,
@@ -20,6 +21,7 @@ const authenticateBodySchema = z.object({
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 
 @Controller("/sessions")
+@Public()
 export class AuthenticateController {
   constructor(private authenticateBuyer: AuthenticateBuyerUseCase) {}
 
