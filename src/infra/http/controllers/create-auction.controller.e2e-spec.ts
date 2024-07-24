@@ -39,6 +39,7 @@ describe("Create auction (E2E)", () => {
       .set("Authorization", `Bearer ${accessToken}`)
       .send({
         bookName: "New Book",
+        bookImageUrl: "https://example.com/image.jpg",
         description: "LOREM IPSUM",
       });
 

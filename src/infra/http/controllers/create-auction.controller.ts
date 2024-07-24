@@ -9,6 +9,7 @@ import { z } from "zod";
 const createAuctionBodySchema = z.object({
   bookName: z.string(),
   description: z.string(),
+  bookImageUrl: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createAuctionBodySchema);
@@ -25,7 +26,7 @@ export class CreateAuctionController {
     @Body(bodyValidationPipe) body: CreateAuctionBodySchema,
     @CurrentUser() user: UserPayload
   ) {
-    const { bookName, description } = body;
+    const { bookName, description, bookImageUrl } = body;
     const userId = user.sub;
 
     const slug = this.convertToSlug(bookName);
@@ -34,6 +35,7 @@ export class CreateAuctionController {
       data: {
         authorId: userId,
         bookName,
+        bookImageUrl,
         description,
         slug,
       },

@@ -39,12 +39,14 @@ describe("Fetch recent auctions (E2E)", () => {
         {
           bookName: "Book 01",
           slug: "Book-01",
+          bookImageUrl: "https://via.placeholder.com/150",
           description: "Book content",
           authorId: user.id,
         },
         {
           bookName: "Book 02",
           slug: "Book-02",
+          bookImageUrl: "https://via.placeholder.com/150",
           description: "Book content",
           authorId: user.id,
         },
