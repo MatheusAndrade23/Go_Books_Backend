@@ -11,6 +11,7 @@ import { CreateAuctionController } from "./controllers/create-auction.controller
 import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctions.controller";
 import { DeleteBidController } from "./controllers/delete-bid.controller";
 import { DeleteAuctionController } from "./controllers/delete-auction.controller";
+import { FetchAuctionsByBookGenreController } from "./controllers/fetch-auctions-by-book-genre";
 
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
@@ -21,6 +22,7 @@ import { DeleteBidUseCase } from "@/domain/auctions/application/use-cases/delete
 import { DeleteAuctionUseCase } from "@/domain/auctions/application/use-cases/delete-auction";
 import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
 import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/register-seller";
+import { FetchAuctionsByBookGenreUseCase } from "@/domain/auctions/application/use-cases/fetch-auctions-by-book-genre";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -33,6 +35,7 @@ import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/r
     BidAuctionController,
     DeleteBidController,
     DeleteAuctionController,
+    FetchAuctionsByBookGenreController,
   ],
   providers: [
     CreateAuctionUseCase,
@@ -44,6 +47,7 @@ import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/r
     DeleteAuctionUseCase,
     AuthenticateSellerUseCase,
     RegisterSellerUseCase,
+    FetchAuctionsByBookGenreUseCase,
   ],
 })
 export class HttpModule {}

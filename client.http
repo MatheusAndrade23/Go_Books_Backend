@@ -30,7 +30,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 { 
-  "bookName": "New Book",
+  "bookName": "New Book 09",
   "description": "LOREM IPSUM",
   "bookImageUrl": "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg",
   "bookGenre": "Fiction"
@@ -48,5 +48,12 @@ Authorization: Bearer {{authToken}}
 
 # @name delete_auction
 DELETE {{baseUrl}}/auctions/:id
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name fetch_auction_by_book_genre
+GET {{baseUrl}}/auctions/bookGenre/fiction
 Content-Type: application/json
 Authorization: Bearer {{authToken}}

@@ -48,4 +48,14 @@ export class InMemoryAuctionsRepository implements AuctionsRepository {
 
     return auctions;
   }
+
+  async findManyByBookGenre(bookGenre: string) {
+    const auctions = this.items.filter((item) => item.bookGenre === bookGenre);
+
+    if (!auctions) {
+      return [];
+    }
+
+    return auctions;
+  }
 }

@@ -38,6 +38,8 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
   async create(auction: Auction): Promise<void> {
     const data = PrismaAuctionMapper.toPrisma(auction);
 
+    data.bookGenre = data.bookGenre.toLowerCase();
+
     await this.prisma.auction.create({
       data,
     });
@@ -70,6 +72,20 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
       take: 20,
       skip: (page - 1) * 20,
     });
+
+    return auctions.map(PrismaAuctionMapper.toDomain);
+  }
+
+  async findManyByBookGenre(bookGenre: string): Promise<Auction[]> {
+    const auctions = await this.prisma.auction.findMany({
+      where: {
+        bookGenre: bookGenre.toLowerCase(),
+      },
+    });
+
+    if (!auctions) {
+      return [];
+    }
 
     return auctions.map(PrismaAuctionMapper.toDomain);
   }
