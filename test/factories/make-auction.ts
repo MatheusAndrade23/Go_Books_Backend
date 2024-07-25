@@ -17,7 +17,7 @@ export function makeAuction(
       authorId: new UniqueEntityID(),
       bookName: faker.lorem.sentence(),
       description: faker.lorem.text(),
-      bookImageUrl: faker.image.imageUrl(),
+      bookImageUrl: faker.image.url(),
       ...override,
     },
     id

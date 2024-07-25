@@ -11,7 +11,7 @@ export function makeBid(override: Partial<BidProps> = {}, id?: UniqueEntityID) {
     {
       bidderId: new UniqueEntityID(),
       auctionId: new UniqueEntityID(),
-      amount: faker.datatype.number(),
+      amount: faker.number.int(),
       status: "pending",
       ...override,
     },
