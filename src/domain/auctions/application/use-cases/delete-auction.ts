@@ -2,6 +2,7 @@ import { Either, left, right } from "@/core/either";
 import { AuctionsRepository } from "../repositories/auctions-repository";
 import { ResourceNotFoundError } from "@/domain/auctions/application/use-cases/errors/resource-not-found-error";
 import { NotAllowedError } from "@/domain/auctions/application/use-cases/errors/not-allowed-error";
+import { Injectable } from "@nestjs/common";
 
 interface DeleteAuctionUseCaseRequest {
   authorId: string;
@@ -13,7 +14,8 @@ type DeleteAuctionUseCaseResponse = Either<
   {}
 >;
 
-export class DeleteAuctionsUseCase {
+@Injectable()
+export class DeleteAuctionUseCase {
   constructor(private auctionsRepository: AuctionsRepository) {}
 
   async execute({
