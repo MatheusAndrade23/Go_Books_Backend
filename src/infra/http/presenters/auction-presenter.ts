@@ -9,6 +9,7 @@ export class AuctionPresenter {
       acceptedBidId: auction.acceptedBidId?.toString(),
       createdAt: auction.createdAt,
       bookImageUrl: auction.bookImageUrl,
+      bookGenre: auction.bookGenre,
     };
   }
 }
