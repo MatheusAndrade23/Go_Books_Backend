@@ -1,16 +1,16 @@
-import { DeleteAuctionsUseCase } from "./delete-auction";
+import { DeleteAuctionUseCase } from "./delete-auction";
 import { InMemoryAuctionsRepository } from "test/repositories/in-memory-auctions-repository";
 import { makeAuction } from "test/factories/make-auction";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { NotAllowedError } from "@/domain/auctions/application/use-cases/errors/not-allowed-error";
 
 let inMemoryAuctionsRepository: InMemoryAuctionsRepository;
-let sut: DeleteAuctionsUseCase;
+let sut: DeleteAuctionUseCase;
 
 describe("Delete Auctions", () => {
   beforeEach(() => {
     inMemoryAuctionsRepository = new InMemoryAuctionsRepository();
-    sut = new DeleteAuctionsUseCase(inMemoryAuctionsRepository);
+    sut = new DeleteAuctionUseCase(inMemoryAuctionsRepository);
   });
 
   it("should be able to delete a auction", async () => {

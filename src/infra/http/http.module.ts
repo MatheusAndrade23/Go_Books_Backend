@@ -19,6 +19,8 @@ import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-case
 import { BidAuctionUseCase } from "@/domain/auctions/application/use-cases/bid-auction";
 import { DeleteBidUseCase } from "@/domain/auctions/application/use-cases/delete-bid";
 import { DeleteAuctionUseCase } from "@/domain/auctions/application/use-cases/delete-auction";
+import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
+import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/register-seller";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -40,6 +42,8 @@ import { DeleteAuctionUseCase } from "@/domain/auctions/application/use-cases/de
     BidAuctionUseCase,
     DeleteBidUseCase,
     DeleteAuctionUseCase,
+    AuthenticateSellerUseCase,
+    RegisterSellerUseCase,
   ],
 })
 export class HttpModule {}

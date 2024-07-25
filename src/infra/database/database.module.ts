@@ -6,6 +6,8 @@ import { BuyersRepository } from "@/domain/auctions/application/repositories/buy
 import { PrismaBuyersRepository } from "./prisma/repositories/prisma-buyers-repository";
 import { PrismaBidsRepository } from "./prisma/repositories/prisma-bids-repository";
 import { BidsRepository } from "@/domain/auctions/application/repositories/bids-repository";
+import { SellersRepository } from "@/domain/auctions/application/repositories/sellers-repository";
+import { PrismaSellersRepository } from "./prisma/repositories/prisma-sellers-repository";
 
 @Module({
   providers: [
@@ -22,12 +24,17 @@ import { BidsRepository } from "@/domain/auctions/application/repositories/bids-
       provide: BidsRepository,
       useClass: PrismaBidsRepository,
     },
+    {
+      provide: SellersRepository,
+      useClass: PrismaSellersRepository,
+    },
   ],
   exports: [
     PrismaService,
     AuctionsRepository,
     BuyersRepository,
     BidsRepository,
+    SellersRepository,
   ],
 })
 export class DatabaseModule {}

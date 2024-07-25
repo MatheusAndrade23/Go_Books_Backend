@@ -11,11 +11,13 @@ import {
   UsePipes,
 } from "@nestjs/common";
 import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-cases/authenticate-buyer";
+import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
 import { WrongCredentialsError } from "@/domain/auctions/application/use-cases/errors/wrong-credentials-error";
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
   password: z.string(),
+  role: z.enum(["buyer", "seller"]).optional().default("buyer"),
 });
 
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
@@ -23,17 +25,29 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 @Controller("/sessions")
 @Public()
 export class AuthenticateController {
-  constructor(private authenticateBuyer: AuthenticateBuyerUseCase) {}
+  constructor(
+    private authenticateBuyer: AuthenticateBuyerUseCase,
+    private authenticateSeller: AuthenticateSellerUseCase
+  ) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handle(@Body() body: AuthenticateBodySchema) {
-    const { email, password } = body;
+    const { email, password, role } = body;
 
-    const result = await this.authenticateBuyer.execute({
-      email,
-      password,
-    });
+    let result;
+
+    if (role === "seller") {
+      result = await this.authenticateSeller.execute({
+        email,
+        password,
+      });
+    } else {
+      result = await this.authenticateBuyer.execute({
+        email,
+        password,
+      });
+    }
 
     if (result.isLeft()) {
       const error = result.value;
