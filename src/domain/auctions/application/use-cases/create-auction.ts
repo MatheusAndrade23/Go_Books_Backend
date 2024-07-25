@@ -9,6 +9,7 @@ interface CreateAuctionUseCaseRequest {
   bookName: string;
   description: string;
   bookImageUrl: string;
+  bookGenre: string;
 }
 
 type CreateAuctionUseCaseResponse = Either<
@@ -27,12 +28,14 @@ export class CreateAuctionUseCase {
     bookName,
     description,
     bookImageUrl,
+    bookGenre,
   }: CreateAuctionUseCaseRequest): Promise<CreateAuctionUseCaseResponse> {
     const auction = Auction.create({
       authorId: new UniqueEntityID(authorId),
       bookName,
       description,
       bookImageUrl,
+      bookGenre,
     });
 
     await this.auctionsRepository.create(auction);

@@ -42,6 +42,7 @@ describe("Fetch recent auctions (E2E)", () => {
           bookImageUrl: "https://via.placeholder.com/150",
           description: "Book content",
           authorId: user.id,
+          bookGenre: "Fantasy",
         },
         {
           bookName: "Book 02",
@@ -49,6 +50,7 @@ describe("Fetch recent auctions (E2E)", () => {
           bookImageUrl: "https://via.placeholder.com/150",
           description: "Book content",
           authorId: user.id,
+          bookGenre: "Fantasy",
         },
       ],
     });

@@ -1,6 +1,5 @@
 import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
-import { JwtAuthGuard } from "@/infra/auth/jwt-auth.guard";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
@@ -10,6 +9,7 @@ const createAuctionBodySchema = z.object({
   bookName: z.string(),
   description: z.string(),
   bookImageUrl: z.string(),
+  bookGenre: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationPipe(createAuctionBodySchema);
@@ -25,7 +25,7 @@ export class CreateAuctionController {
     @Body(bodyValidationPipe) body: CreateAuctionBodySchema,
     @CurrentUser() user: UserPayload
   ) {
-    const { bookName, description, bookImageUrl } = body;
+    const { bookName, description, bookImageUrl, bookGenre } = body;
     const userId = user.sub;
 
     const result = await this.createAuction.execute({
@@ -33,6 +33,7 @@ export class CreateAuctionController {
       bookName,
       bookImageUrl,
       description,
+      bookGenre,
     });
 
     if (result.isLeft()) {

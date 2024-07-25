@@ -18,6 +18,7 @@ export function makeAuction(
       bookName: faker.lorem.sentence(),
       description: faker.lorem.text(),
       bookImageUrl: faker.image.url(),
+      bookGenre: faker.lorem.sentence(),
       ...override,
     },
     id

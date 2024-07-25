@@ -13,6 +13,7 @@ export class PrismaAuctionMapper {
         authorId: new UniqueEntityID(raw.authorId),
         slug: Slug.create(raw.slug),
         createdAt: raw.createdAt,
+        bookGenre: raw.bookGenre,
         acceptedBidId: raw.acceptedBidId
           ? new UniqueEntityID(raw.acceptedBidId)
           : null,
@@ -31,6 +32,7 @@ export class PrismaAuctionMapper {
       slug: auction.slug.value,
       createdAt: auction.createdAt,
       bookImageUrl: auction.bookImageUrl,
+      bookGenre: auction.bookGenre,
     };
   }
 }

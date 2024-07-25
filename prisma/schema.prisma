@@ -8,14 +8,14 @@ datasource db {
 }
 
 enum UserRole {
-  BUYER
-  SELLER
+  buyer
+  seller
 }
 
 enum AuctionStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
+  pending
+  accepted
+  rejected
 }
 
 model User {
@@ -23,7 +23,7 @@ model User {
   name     String
   email    String    @unique
   password String
-  role     UserRole  @default(BUYER)
+  role     UserRole  @default(buyer)
   books    Auction[]
   bids     Bid[]
 
@@ -36,6 +36,7 @@ model Auction {
   bookImageUrl  String   @map("book_image_url")
   slug          String   @unique
   description   String
+  bookGenre     String   @map("book_genre")
   authorId      String   @map("author_id")
   createdAt     DateTime @default(now()) @map("created_at")
   acceptedBidId String?  @unique @map("accepted_bid_id")
@@ -53,7 +54,7 @@ model Bid {
   bidderId  String        @map("bidder_id")
   auctionId String        @map("book_id")
   createdAt DateTime      @default(now()) @map("created_at")
-  status    AuctionStatus @default(PENDING)
+  status    AuctionStatus @default(pending)
 
   acceptedOn Auction? @relation("acceptedBid")
   auction    Auction  @relation(fields: [auctionId], references: [id])

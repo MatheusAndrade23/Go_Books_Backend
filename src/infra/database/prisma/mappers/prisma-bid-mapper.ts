@@ -10,7 +10,7 @@ export class PrismaBidMapper {
         bidderId: new UniqueEntityID(raw.bidderId),
         createdAt: raw.createdAt,
         amount: raw.amount,
-        status: raw.status.toLowerCase() as "pending" | "accepted" | "rejected",
+        status: raw.status,
       },
       new UniqueEntityID(raw.id)
     );
@@ -23,7 +23,7 @@ export class PrismaBidMapper {
       auctionId: bid.auctionId.toString(),
       createdAt: bid.createdAt,
       amount: bid.amount,
-      status: bid.status.toUpperCase() as "PENDING" | "ACCEPTED" | "REJECTED",
+      status: bid.status,
     };
   }
 }

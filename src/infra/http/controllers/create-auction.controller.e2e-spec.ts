@@ -41,6 +41,7 @@ describe("Create auction (E2E)", () => {
         bookName: "New Book",
         bookImageUrl: "https://example.com/image.jpg",
         description: "LOREM IPSUM",
+        bookGenre: "Fantasy",
       });
 
     expect(response.statusCode).toBe(201);

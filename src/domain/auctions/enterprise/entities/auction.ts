@@ -9,6 +9,7 @@ export interface AuctionProps {
   authorId: UniqueEntityID;
   bookName: string;
   bookImageUrl: string;
+  bookGenre: string;
   description: string;
   slug: Slug;
   acceptedBidId?: UniqueEntityID | null;
@@ -38,6 +39,14 @@ export class Auction extends AggregateRoot<AuctionProps> {
 
   get createdAt() {
     return this.props.createdAt;
+  }
+
+  get bookGenre() {
+    return this.props.bookGenre;
+  }
+
+  set bookGenre(bookGenre: string) {
+    this.props.bookGenre = bookGenre;
   }
 
   get isNew(): boolean {
