@@ -3,7 +3,7 @@ import { Auction } from "@/domain/auctions/enterprise/entities/auction";
 
 export abstract class AuctionsRepository {
   abstract findById(id: string): Promise<Auction | null>;
-  abstract findBySlug(slug: string): Promise<Auction | null>;
+  abstract findManyBySlug(slug: string): Promise<Auction[]>;
   abstract create(auction: Auction): Promise<void>;
   abstract delete(auction: Auction): Promise<void>;
   abstract save(auction: Auction): Promise<void>;

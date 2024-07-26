@@ -5,14 +5,10 @@ import { Auction } from "@/domain/auctions/enterprise/entities/auction";
 export class InMemoryAuctionsRepository implements AuctionsRepository {
   public items: Auction[] = [];
 
-  async findBySlug(slug: string) {
-    const auction = this.items.find((item) => item.slug.value === slug);
+  async findManyBySlug(slug: string) {
+    const auctions = this.items.filter((item) => item.slug.value === slug);
 
-    if (!auction) {
-      return null;
-    }
-
-    return auction;
+    return auctions;
   }
 
   async create(auction: Auction) {
@@ -43,7 +39,11 @@ export class InMemoryAuctionsRepository implements AuctionsRepository {
 
   async findManyRecent({ page }: PaginationParams) {
     const auctions = this.items
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .sort(
+        (a, b) =>
+          (b.createdAt ? b.createdAt.getTime() : 0) -
+          (a.createdAt ? a.createdAt.getTime() : 0)
+      )
       .slice((page - 1) * 20, page * 20);
 
     return auctions;
@@ -51,10 +51,6 @@ export class InMemoryAuctionsRepository implements AuctionsRepository {
 
   async findManyByBookGenre(bookGenre: string) {
     const auctions = this.items.filter((item) => item.bookGenre === bookGenre);
-
-    if (!auctions) {
-      return [];
-    }
 
     return auctions;
   }

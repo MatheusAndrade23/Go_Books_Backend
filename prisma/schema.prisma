@@ -34,7 +34,7 @@ model Auction {
   id            String   @id @default(uuid())
   bookName      String   @map("book_name")
   bookImageUrl  String   @map("book_image_url")
-  slug          String   @unique
+  slug          String
   description   String
   bookGenre     String   @map("book_genre")
   authorId      String   @map("author_id")

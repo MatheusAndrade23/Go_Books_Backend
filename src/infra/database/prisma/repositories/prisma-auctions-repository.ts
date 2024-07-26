@@ -22,18 +22,14 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
 
     return PrismaAuctionMapper.toDomain(auction);
   }
-  async findBySlug(slug: string): Promise<Auction | null> {
-    const auction = await this.prisma.auction.findUnique({
+  async findManyBySlug(slug: string): Promise<Auction[]> {
+    const auctions = await this.prisma.auction.findMany({
       where: {
         slug,
       },
     });
 
-    if (!auction) {
-      return null;
-    }
-
-    return PrismaAuctionMapper.toDomain(auction);
+    return auctions.map(PrismaAuctionMapper.toDomain);
   }
   async create(auction: Auction): Promise<void> {
     const data = PrismaAuctionMapper.toPrisma(auction);
@@ -82,10 +78,6 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
         bookGenre: bookGenre.toLowerCase(),
       },
     });
-
-    if (!auctions) {
-      return [];
-    }
 
     return auctions.map(PrismaAuctionMapper.toDomain);
   }
