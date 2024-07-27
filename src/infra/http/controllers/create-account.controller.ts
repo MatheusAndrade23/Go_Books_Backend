@@ -15,6 +15,8 @@ import { BuyerAlreadyExistsError } from "@/domain/auctions/application/use-cases
 import { SellerAlreadyExistsError } from "@/domain/auctions/application/use-cases/errors/seller-already-exists-error";
 import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/register-seller";
 
+import { UserPresenter } from "../presenters/user-presenter";
+
 const createAccountBodySchema = z.object({
   name: z.string(),
   email: z.string().email(),
@@ -39,6 +41,8 @@ export class CreateAccountController {
     const { name, email, password, role } = body;
 
     let result;
+    let id: string;
+    let props;
 
     if (role === "seller") {
       result = await this.registerSeller.execute({
@@ -46,12 +50,24 @@ export class CreateAccountController {
         email,
         password,
       });
+
+      id = result.value.seller._id.value;
+      props = {
+        ...result.value.seller.props,
+        role: "seller",
+      };
     } else {
       result = await this.registerBuyer.execute({
         name,
         email,
         password,
       });
+
+      id = result.value.buyer._id.value;
+      props = {
+        ...result.value.buyer.props,
+        role: "buyer",
+      };
     }
 
     if (result.isLeft()) {
@@ -66,5 +82,12 @@ export class CreateAccountController {
           throw new BadRequestException(error.message);
       }
     }
+
+    const user = {
+      ...props,
+      id,
+    };
+
+    return UserPresenter.toHTTP(user);
   }
 }
