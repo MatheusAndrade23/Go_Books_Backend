@@ -18,10 +18,18 @@ export class InMemoryBidsRepository implements BidsRepository {
     return bid;
   }
 
-  async findManyByAuctionId(auctionId: string, { page }: PaginationParams) {
-    const bids = this.items
-      .filter((item) => item.auctionId.toString() === auctionId)
-      .slice((page - 1) * 20, page * 20);
+  async findManyByAuctionId(auctionId: string) {
+    const bids = this.items.filter(
+      (item) => item.auctionId.toString() === auctionId
+    );
+
+    return bids;
+  }
+
+  async findManyByAuthorId(authorId: string) {
+    const bids = this.items.filter(
+      (item) => item.bidderId.toString() === authorId
+    );
 
     return bids;
   }

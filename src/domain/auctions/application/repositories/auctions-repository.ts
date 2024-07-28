@@ -9,4 +9,5 @@ export abstract class AuctionsRepository {
   abstract save(auction: Auction): Promise<void>;
   abstract findManyRecent(params: PaginationParams): Promise<Auction[]>;
   abstract findManyByBookGenre(bookGenre: string): Promise<Auction[]>;
+  abstract findManyByAuthorId(id: string): Promise<Auction[]>;
 }

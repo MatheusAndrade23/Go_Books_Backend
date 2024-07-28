@@ -12,6 +12,12 @@ import { FetchRecentAuctionsController } from "./controllers/fetch-recent-auctio
 import { DeleteBidController } from "./controllers/delete-bid.controller";
 import { DeleteAuctionController } from "./controllers/delete-auction.controller";
 import { FetchAuctionsByBookGenreController } from "./controllers/fetch-auctions-by-book-genre";
+import { GetAuctionByIdController } from "./controllers/get-auction-by-id.controller";
+import { FetchBidsByAuthorIdController } from "./controllers/fetch-bids-by-author-id.controller";
+import { FetchAuctionsByAuthorIdController } from "./controllers/fetch-auctions-by-author-id";
+import { FetchBidsByAuctionIdController } from "./controllers/fetch-bids-by-auction-id.controller";
+import { AcceptBidByIdController } from "./controllers/accept-bid-by-id.controller";
+import { RejectBidByIdController } from "./controllers/reject-bid-by-id.controller";
 
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
@@ -23,6 +29,12 @@ import { DeleteAuctionUseCase } from "@/domain/auctions/application/use-cases/de
 import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
 import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/register-seller";
 import { FetchAuctionsByBookGenreUseCase } from "@/domain/auctions/application/use-cases/fetch-auctions-by-book-genre";
+import { GetAuctionByIdUseCase } from "@/domain/auctions/application/use-cases/get-auction-by-id";
+import { GetBidsByAuthorIdUseCase } from "@/domain/auctions/application/use-cases/get-bids-by-author-id";
+import { GetAuctionsByAuthorIdUseCase } from "@/domain/auctions/application/use-cases/get-auctions-by-author-id";
+import { GetBidsByAuctionIdUseCase } from "@/domain/auctions/application/use-cases/fetch-bids-by-auction-id";
+import { RejectBidUseCase } from "@/domain/auctions/application/use-cases/reject-bid-by-id";
+import { AcceptBidUseCase } from "@/domain/auctions/application/use-cases/accept-bid-by-id";
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -36,6 +48,12 @@ import { FetchAuctionsByBookGenreUseCase } from "@/domain/auctions/application/u
     DeleteBidController,
     DeleteAuctionController,
     FetchAuctionsByBookGenreController,
+    GetAuctionByIdController,
+    FetchBidsByAuthorIdController,
+    FetchAuctionsByAuthorIdController,
+    FetchBidsByAuctionIdController,
+    AcceptBidByIdController,
+    RejectBidByIdController,
   ],
   providers: [
     CreateAuctionUseCase,
@@ -48,6 +66,12 @@ import { FetchAuctionsByBookGenreUseCase } from "@/domain/auctions/application/u
     AuthenticateSellerUseCase,
     RegisterSellerUseCase,
     FetchAuctionsByBookGenreUseCase,
+    GetAuctionByIdUseCase,
+    GetBidsByAuthorIdUseCase,
+    GetAuctionsByAuthorIdUseCase,
+    GetBidsByAuctionIdUseCase,
+    RejectBidUseCase,
+    AcceptBidUseCase,
   ],
 })
 export class HttpModule {}

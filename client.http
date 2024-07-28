@@ -30,10 +30,10 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 { 
-  "bookName": "New Book 09",
+  "bookName": "New Book",
   "description": "LOREM IPSUM",
   "bookImageUrl": "https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg",
-  "bookGenre": "Fiction"
+  "bookGenre": "fantasia"
 }
 
 
@@ -54,6 +54,13 @@ Authorization: Bearer {{authToken}}
 ###
 
 # @name fetch_auction_by_book_genre
-GET {{baseUrl}}/auctions/bookGenre/fiction
+GET {{baseUrl}}/auctions/bookGenre/ficção
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name fetch_bids_by_author_id
+GET {{baseUrl}}/bids
 Content-Type: application/json
 Authorization: Bearer {{authToken}}

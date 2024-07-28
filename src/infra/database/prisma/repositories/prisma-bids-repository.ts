@@ -23,10 +23,7 @@ export class PrismaBidsRepository implements BidsRepository {
     return PrismaBidMapper.toDomain(bid);
   }
 
-  async findManyByAuctionId(
-    auctionId: string,
-    { page }: PaginationParams
-  ): Promise<Bid[]> {
+  async findManyByAuctionId(auctionId: string): Promise<Bid[]> {
     const bids = await this.prisma.bid.findMany({
       where: {
         auctionId,
@@ -34,8 +31,19 @@ export class PrismaBidsRepository implements BidsRepository {
       orderBy: {
         createdAt: "desc",
       },
-      take: 20,
-      skip: (page - 1) * 20,
+    });
+
+    return bids.map(PrismaBidMapper.toDomain);
+  }
+
+  async findManyByAuthorId(bidderId: string): Promise<Bid[]> {
+    const bids = await this.prisma.bid.findMany({
+      where: {
+        bidderId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return bids.map(PrismaBidMapper.toDomain);

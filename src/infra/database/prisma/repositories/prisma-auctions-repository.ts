@@ -31,6 +31,20 @@ export class PrismaAuctionsRepository implements AuctionsRepository {
 
     return auctions.map(PrismaAuctionMapper.toDomain);
   }
+
+  async findManyByAuthorId(authorId: string): Promise<Auction[]> {
+    const auctions = await this.prisma.auction.findMany({
+      where: {
+        authorId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return auctions.map(PrismaAuctionMapper.toDomain);
+  }
+
   async create(auction: Auction): Promise<void> {
     const data = PrismaAuctionMapper.toPrisma(auction);
 

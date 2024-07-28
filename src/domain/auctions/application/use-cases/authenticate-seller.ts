@@ -50,6 +50,7 @@ export class AuthenticateSellerUseCase {
 
     return right({
       accessToken,
+      ...seller,
     });
   }
 }

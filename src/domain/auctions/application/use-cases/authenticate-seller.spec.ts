@@ -37,8 +37,8 @@ describe("Authenticate Seller", () => {
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value).toEqual({
-      accessToken: expect.any(String),
-    });
+    expect(result.value).toEqual(
+      expect.objectContaining({ accessToken: expect.any(String) })
+    );
   });
 });

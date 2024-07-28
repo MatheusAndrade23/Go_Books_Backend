@@ -10,6 +10,7 @@ export class AuctionPresenter {
       createdAt: auction.createdAt,
       bookImageUrl: auction.bookImageUrl,
       bookGenre: auction.bookGenre,
+      description: auction.description,
     };
   }
 }

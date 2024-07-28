@@ -41,8 +41,6 @@ export class CreateAccountController {
     const { name, email, password, role } = body;
 
     let result;
-    let id: string;
-    let props;
 
     if (role === "seller") {
       result = await this.registerSeller.execute({
@@ -50,24 +48,12 @@ export class CreateAccountController {
         email,
         password,
       });
-
-      id = result.value.seller._id.value;
-      props = {
-        ...result.value.seller.props,
-        role: "seller",
-      };
     } else {
       result = await this.registerBuyer.execute({
         name,
         email,
         password,
       });
-
-      id = result.value.buyer._id.value;
-      props = {
-        ...result.value.buyer.props,
-        role: "buyer",
-      };
     }
 
     if (result.isLeft()) {
@@ -82,6 +68,12 @@ export class CreateAccountController {
           throw new BadRequestException(error.message);
       }
     }
+
+    const id = result.value[role]._id.value;
+    const props = {
+      ...result.value[role].props,
+      role,
+    };
 
     const user = {
       ...props,

@@ -16,6 +16,7 @@ describe("Create Auction", () => {
       bookName: "Nova Livro",
       description: "Descrição da Livro",
       bookImageUrl: "http://image.com",
+      bookGenre: "Ficção",
     });
 
     expect(result.isRight()).toBe(true);

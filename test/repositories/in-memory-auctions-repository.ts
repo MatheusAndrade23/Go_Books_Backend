@@ -37,6 +37,14 @@ export class InMemoryAuctionsRepository implements AuctionsRepository {
     this.items[itemIndex] = auction;
   }
 
+  async findManyByAuthorId(authorId: string) {
+    const auctions = this.items.filter(
+      (item) => item.authorId.toString() === authorId
+    );
+
+    return auctions;
+  }
+
   async findManyRecent({ page }: PaginationParams) {
     const auctions = this.items
       .sort(

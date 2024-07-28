@@ -13,6 +13,7 @@ import {
 import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-cases/authenticate-buyer";
 import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
 import { WrongCredentialsError } from "@/domain/auctions/application/use-cases/errors/wrong-credentials-error";
+import { UserPresenter } from "../presenters/user-presenter";
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -60,9 +61,21 @@ export class AuthenticateController {
       }
     }
 
+    const id = result.value._id.value;
+    const props = {
+      ...result.value.props,
+      role,
+    };
+
+    const user = {
+      ...props,
+      id,
+    };
+
     const { accessToken } = result.value;
 
     return {
+      user: UserPresenter.toHTTP(user),
       access_token: accessToken,
     };
   }

@@ -5,14 +5,11 @@ import { NotAllowedError } from "@/domain/auctions/application/use-cases/errors/
 import { ResourceNotFoundError } from "@/domain/auctions/application/use-cases/errors/resource-not-found-error";
 import { Injectable } from "@nestjs/common";
 
-interface EditAuctionUseCaseRequest {
-  authorId: string;
-  auctionId: string;
-  bookName: string;
-  description: string;
+interface GetAuctionByIdUseCaseRequest {
+  id: string;
 }
 
-type EditAuctionUseCaseResponse = Either<
+type GetAuctionByIdUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   {
     auction: Auction;
@@ -20,29 +17,17 @@ type EditAuctionUseCaseResponse = Either<
 >;
 
 @Injectable()
-export class EditAuctionUseCase {
+export class GetAuctionByIdUseCase {
   constructor(private auctionsRepository: AuctionsRepository) {}
 
   async execute({
-    authorId,
-    auctionId,
-    bookName,
-    description,
-  }: EditAuctionUseCaseRequest): Promise<EditAuctionUseCaseResponse> {
-    const auction = await this.auctionsRepository.findById(auctionId);
+    id,
+  }: GetAuctionByIdUseCaseRequest): Promise<GetAuctionByIdUseCaseResponse> {
+    const auction = await this.auctionsRepository.findById(id);
 
     if (!auction) {
       return left(new ResourceNotFoundError());
     }
-
-    if (authorId !== auction.authorId.toString()) {
-      return left(new NotAllowedError());
-    }
-
-    auction.bookName = bookName;
-    auction.description = description;
-
-    await this.auctionsRepository.save(auction);
 
     return right({
       auction,
