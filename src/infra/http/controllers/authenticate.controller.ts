@@ -18,7 +18,7 @@ import { UserPresenter } from "../presenters/user-presenter";
 const authenticateBodySchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  role: z.enum(["buyer", "seller"]).optional().default("buyer"),
+  role: z.enum(["buyer", "seller"]),
 });
 
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
