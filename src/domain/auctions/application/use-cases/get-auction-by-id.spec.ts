@@ -1,14 +1,19 @@
 import { GetAuctionByIdUseCase } from "./get-auction-by-id";
 import { InMemoryAuctionsRepository } from "test/repositories/in-memory-auctions-repository";
+import { InMemoryAuctionAttachmentsRepository } from "test/repositories/in-memory-auctions-attachments-repository";
+
 import { makeAuction } from "test/factories/make-auction";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
+let inMemoryAuctionAttachmentsRepository: InMemoryAuctionAttachmentsRepository;
 let inMemoryAuctionsRepository: InMemoryAuctionsRepository;
 let sut: GetAuctionByIdUseCase;
 
 describe("Get Auction By Id", () => {
   beforeEach(() => {
-    inMemoryAuctionsRepository = new InMemoryAuctionsRepository();
+    inMemoryAuctionsRepository = new InMemoryAuctionsRepository(
+      inMemoryAuctionAttachmentsRepository
+    );
     sut = new GetAuctionByIdUseCase(inMemoryAuctionsRepository);
   });
 

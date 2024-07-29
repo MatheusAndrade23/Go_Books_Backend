@@ -31,18 +31,20 @@ model User {
 }
 
 model Auction {
-  id            String   @id @default(uuid())
-  bookName      String   @map("book_name")
-  bookImageUrl  String   @map("book_image_url")
-  slug          String
-  description   String
-  bookGenre     String   @map("book_genre")
-  authorId      String   @map("author_id")
-  createdAt     DateTime @default(now()) @map("created_at")
-  acceptedBidId String?  @unique @map("accepted_bid_id")
+  id             String   @id @default(uuid())
+  bookName       String   @map("book_name")
+  bookImageUrl   String   @map("book_image_url")
+  slug           String
+  description    String
+  bookGenre      String   @map("book_genre")
+  authorId       String   @map("author_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+  acceptedBidId  String?  @unique @map("accepted_bid_id")
+  attachmentsIds String[] @default([]) @map("attachments_ids")
 
-  author      User  @relation(fields: [authorId], references: [id])
-  acceptedBid Bid?  @relation("acceptedBid", fields: [acceptedBidId], references: [id])
+  author      User         @relation(fields: [authorId], references: [id])
+  acceptedBid Bid?         @relation("acceptedBid", fields: [acceptedBidId], references: [id])
+  attachments Attachment[]
   bids        Bid[]
 
   @@map("auctions")
@@ -61,4 +63,15 @@ model Bid {
   bidder     User     @relation(fields: [bidderId], references: [id])
 
   @@map("bids")
+}
+
+model Attachment {
+  id        String  @id @default(uuid())
+  title     String
+  url       String
+  auctionId String? @map("auction_id")
+
+  auction Auction? @relation(fields: [auctionId], references: [id])
+
+  @@map("attachments")
 }

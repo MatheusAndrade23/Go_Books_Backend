@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { DatabaseModule } from "../database/database.module";
 import { CryptographyModule } from "../cryptography/cryptography.module";
+import { StorageModule } from "../storage/storage.module";
 
 import { UploadAttachmentController } from "./controllers/upload-attachment.controller";
 import { BidAuctionController } from "./controllers/bid-auction.controller";
@@ -18,6 +19,7 @@ import { FetchAuctionsByAuthorIdController } from "./controllers/fetch-auctions-
 import { FetchBidsByAuctionIdController } from "./controllers/fetch-bids-by-auction-id.controller";
 import { AcceptBidByIdController } from "./controllers/accept-bid-by-id.controller";
 import { RejectBidByIdController } from "./controllers/reject-bid-by-id.controller";
+import { UploadAndCreateAttachmentUseCase } from "@/domain/auctions/application/use-cases/upload-and-create-attachment";
 
 import { CreateAuctionUseCase } from "@/domain/auctions/application/use-cases/create-auction";
 import { FetchRecentAuctionsUseCase } from "@/domain/auctions/application/use-cases/fetch-recent-auctions";
@@ -37,7 +39,7 @@ import { RejectBidUseCase } from "@/domain/auctions/application/use-cases/reject
 import { AcceptBidUseCase } from "@/domain/auctions/application/use-cases/accept-bid-by-id";
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
@@ -72,6 +74,7 @@ import { AcceptBidUseCase } from "@/domain/auctions/application/use-cases/accept
     GetBidsByAuctionIdUseCase,
     RejectBidUseCase,
     AcceptBidUseCase,
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}

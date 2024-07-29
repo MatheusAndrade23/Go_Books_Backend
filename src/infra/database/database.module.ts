@@ -1,13 +1,20 @@
 import { Module } from "@nestjs/common";
 import { PrismaService } from "./prisma/prisma.service";
+
 import { PrismaAuctionsRepository } from "./prisma/repositories/prisma-auctions-repository";
 import { AuctionsRepository } from "@/domain/auctions/application/repositories/auctions-repository";
+
 import { BuyersRepository } from "@/domain/auctions/application/repositories/buyers-repository";
 import { PrismaBuyersRepository } from "./prisma/repositories/prisma-buyers-repository";
+
 import { PrismaBidsRepository } from "./prisma/repositories/prisma-bids-repository";
 import { BidsRepository } from "@/domain/auctions/application/repositories/bids-repository";
+
 import { SellersRepository } from "@/domain/auctions/application/repositories/sellers-repository";
 import { PrismaSellersRepository } from "./prisma/repositories/prisma-sellers-repository";
+
+import { AttachmentsRepository } from "@/domain/auctions/application/repositories/attachments-repository";
+import { PrismaAttachmentsRepository } from "./prisma/repositories/prisma-attachments-repository";
 
 @Module({
   providers: [
@@ -28,6 +35,10 @@ import { PrismaSellersRepository } from "./prisma/repositories/prisma-sellers-re
       provide: SellersRepository,
       useClass: PrismaSellersRepository,
     },
+    {
+      provide: AttachmentsRepository,
+      useClass: PrismaAttachmentsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -35,6 +46,7 @@ import { PrismaSellersRepository } from "./prisma/repositories/prisma-sellers-re
     BuyersRepository,
     BidsRepository,
     SellersRepository,
+    AttachmentsRepository,
   ],
 })
 export class DatabaseModule {}

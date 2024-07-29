@@ -37,5 +37,9 @@ describe("Upload attachment (E2E)", () => {
       .attach("file", "./test/e2e/sample-upload.jpg");
 
     expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual({
+      attachmentUrl: expect.any(String),
+      attachmentId: expect.any(String),
+    });
   });
 });
