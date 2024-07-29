@@ -14,6 +14,7 @@ import { AuthenticateBuyerUseCase } from "@/domain/auctions/application/use-case
 import { AuthenticateSellerUseCase } from "@/domain/auctions/application/use-cases/authenticate-seller";
 import { WrongCredentialsError } from "@/domain/auctions/application/use-cases/errors/wrong-credentials-error";
 import { UserPresenter } from "../presenters/user-presenter";
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -23,6 +24,25 @@ const authenticateBodySchema = z.object({
 
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 
+const userResponseSchema = {
+  type: "object",
+  properties: {
+    id: { type: "string" },
+    name: { type: "string" },
+    email: { type: "string", format: "email" },
+    role: { type: "string", enum: ["buyer", "seller"] },
+  },
+};
+
+const authenticateResponseSchema = {
+  type: "object",
+  properties: {
+    user: userResponseSchema,
+    access_token: { type: "string" },
+  },
+};
+
+@ApiTags("Authentication")
 @Controller("/sessions")
 @Public()
 export class AuthenticateController {
@@ -33,6 +53,27 @@ export class AuthenticateController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
+  @ApiOperation({ summary: "Authenticate a user." })
+  @ApiBody({
+    description: "The body for user authentication",
+    required: true,
+    schema: {
+      type: "object",
+      properties: {
+        email: { type: "string", format: "email" },
+        password: { type: "string" },
+        role: { type: "string", enum: ["buyer", "seller"] },
+      },
+      required: ["email", "password", "role"],
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: "User authenticated successfully.",
+    schema: authenticateResponseSchema,
+  })
+  @ApiResponse({ status: 400, description: "Bad Request." })
+  @ApiResponse({ status: 401, description: "Unauthorized. Wrong credentials." })
   async handle(@Body() body: AuthenticateBodySchema) {
     const { email, password, role } = body;
 

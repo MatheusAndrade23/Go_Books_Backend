@@ -13,6 +13,15 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { InvalidAttachmentTypeError } from "@/domain/auctions/application/use-cases/errors/invalid-attachment-type-error";
 import { UploadAndCreateAttachmentUseCase } from "@/domain/auctions/application/use-cases/upload-and-create-attachment";
 
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+} from "@nestjs/swagger";
+
+@ApiBearerAuth()
+@ApiTags("Attachments")
 @Controller("/attachments")
 export class UploadAttachmentController {
   constructor(
@@ -21,6 +30,12 @@ export class UploadAttachmentController {
 
   @Post()
   @UseInterceptors(FileInterceptor("file"))
+  @ApiOperation({ summary: "Upload an attachment." })
+  @ApiResponse({
+    status: 201,
+    description: "Attachment uploaded successfully.",
+  })
+  @ApiResponse({ status: 400, description: "Invalid file type or size." })
   async handle(
     @UploadedFile(
       new ParseFilePipe({

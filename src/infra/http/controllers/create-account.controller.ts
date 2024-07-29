@@ -16,6 +16,14 @@ import { SellerAlreadyExistsError } from "@/domain/auctions/application/use-case
 import { RegisterSellerUseCase } from "@/domain/auctions/application/use-cases/register-seller";
 
 import { UserPresenter } from "../presenters/user-presenter";
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from "@nestjs/swagger";
+import { Buyer } from "@/domain/auctions/enterprise/entities/buyer";
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -26,6 +34,17 @@ const createAccountBodySchema = z.object({
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>;
 
+const userResponseSchema = {
+  type: "object",
+  properties: {
+    id: { type: "string" },
+    name: { type: "string" },
+    email: { type: "string", format: "email" },
+    role: { type: "string", enum: ["buyer", "seller"] },
+  },
+};
+
+@ApiTags("Authentication")
 @Controller("/accounts")
 @Public()
 export class CreateAccountController {
@@ -35,8 +54,28 @@ export class CreateAccountController {
   ) {}
 
   @Post()
-  @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
+  @ApiOperation({ summary: "Create a new user." })
+  @ApiBody({
+    description: "The body for creating a new user",
+    required: true,
+    schema: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        email: { type: "string", format: "email" },
+        password: { type: "string" },
+        role: { type: "string", enum: ["buyer", "seller"] },
+      },
+      required: ["name", "email", "password"],
+    },
+  })
+  @ApiResponse({
+    status: 201,
+    description: "User created successfully.",
+    schema: userResponseSchema,
+  })
+  @ApiResponse({ status: 400, description: "Bad Request." })
+  @ApiResponse({ status: 409, description: "Conflict. User already exists." })
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password, role } = body;
 
