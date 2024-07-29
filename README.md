@@ -27,7 +27,7 @@ _<h3>"Vendedor" aceitando ou recusando lances ✅</h3>_
 ![Aceitando_Rejeitando_Lance](https://github.com/user-attachments/assets/9e8a4519-198e-4ed8-94fb-492d9093ceb3)
 
 _<h3>"Comprador" vendo seus lances aceitos ou recusados ✅</h3>_
-![Comprador_Checando_Seus_Lances](https://github.com/user-attachments/assets/11200519-a4af-4cf9-b771-3ecb12830360)
+![Comprador vendo lances](https://github.com/user-attachments/assets/43079180-5100-4699-8550-96508f39bac9)
 
 _<h3>Navegando pelo Prisma Studio e R2 Cloudfare 📁</h3>_
 ![Navegando_Prisma](https://github.com/user-attachments/assets/eff1a426-f1f3-446a-a328-5752ff92f26c)
