@@ -149,6 +149,13 @@ Para configurar o banco de dados, execute as migrações do Prisma:
 npx prisma migrate deploy
 ```
 
-<h4>7. Acessar a Aplicação</h4>
+<h4>7. Iniciar a Aplicação</h4>
+Para iniciar a aplicação, digite no terminal:
+
+```bash
+npm run start
+```
+
+<h4>8. Acessar a Aplicação</h4>
    
 A aplicação deve estar rodando em http://localhost:3333. Acesse http://localhost:3333/docs para ver a documentação.
