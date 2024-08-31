@@ -1,7 +1,7 @@
 <h1 align="center">🛒 Go Books 📒</h1>
 
 <p align="center">
- <a href="#demo">Demonstração</a> •
+ <!-- <a href="#demo">Demonstração</a> •  -->
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#rodar">Rodar Localmente</a>
 </p>
@@ -14,7 +14,7 @@
 
 ---
 
-<h2 id="demo">Demonstração 🎥</h2>
+<!-- <h2 id="demo">Demonstração 🎥</h2>
 
 _<h3>Telas do usuário "Vendedor" + Vendedor criando leilão do livro📚</h3>_
 ![Tela_do_Vendedor](https://github.com/user-attachments/assets/cc262d91-6e74-482a-aed9-8a125e6e9468)
@@ -34,7 +34,7 @@ _<h3>Navegando pelo Prisma Studio e R2 Cloudfare 📁</h3>_
 _<h3>Documentação dos endpoints com Swagger 🌐</h3>_
 ![api_docs_NOVO](https://github.com/user-attachments/assets/eb440561-01a5-48b8-b008-a31daf1ea9b8)
 
-<br>
+<br> -->
 
 ---
 
