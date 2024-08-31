@@ -12,8 +12,6 @@
   <a href="https://github.com/MatheusAndrade23/Go_Books_FrontEnd">Clique para ver o FrontEnd!</a>
 </h4>
 
----
-
 <!-- <h2 id="demo">Demonstração 🎥</h2>
 
 _<h3>Telas do usuário "Vendedor" + Vendedor criando leilão do livro📚</h3>_
